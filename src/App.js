@@ -1,25 +1,41 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css"
+import React from "react"
+import { AnimalView } from "./AnimalView"
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export class App extends React.Component {
+  animals = ["cats", "dogs", "elephants", "lions", "monkeys"]
+  animalCount = Array.apply(null, Array(10))
+
+  constructor(props) {
+    super(props)
+    this.state = { loadedAnimals: [], selectedAnimal: this.animals[0] }
+  }
+
+  render() {
+    return (
+      <div className="App">
+        <section className="animal-list-section">
+          {this.animals.map((animal, index) => {
+            return (
+              <button
+                onClick={() => this.setState({ selectedAnimal: animal })}
+                key={index}
+              >
+                {animal}
+              </button>
+            )
+          })}
+        </section>
+        <section>
+          {this.animalCount.map((n, i) => {
+            return (
+              <AnimalView animal={this.state.selectedAnimal} key={i}></AnimalView>
+            )
+          })}
+        </section>
+      </div>
+    )
+  }
 }
 
-export default App;
+export default App
